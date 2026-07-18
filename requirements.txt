@@ -1,0 +1,42 @@
+# EcoChat project dependency list
+# This project is a Node.js/React application, so dependencies are managed by package.json files.
+# Install them with:
+#   cd client && npm install
+#   cd server && npm install
+
+# Client dependencies
+axios==1.7.2
+emoji-picker-react==4.9.2
+framer-motion==11.2.10
+lucide-react==0.383.0
+react==18.3.1
+react-dom==18.3.1
+react-hook-form==7.51.5
+react-hot-toast==2.4.1
+react-router-dom==6.23.1
+socket.io-client==4.7.5
+zustand==4.5.2
+vite==5.2.11
+@vitejs/plugin-react==4.3.0
+autoprefixer==10.4.19
+postcss==8.4.38
+tailwindcss==3.4.3
+@types/react==18.3.3
+@types/react-dom==18.3.0
+
+# Server dependencies
+bcryptjs==2.4.3
+cloudinary==2.2.0
+cookie-parser==1.4.6
+cors==2.8.5
+dotenv==16.4.5
+express==4.19.2
+express-rate-limit==7.3.1
+helmet==7.1.0
+jsonwebtoken==9.0.2
+mongoose==8.4.1
+multer==1.4.5-lts.1
+passport==0.7.0
+passport-google-oauth20==2.0.0
+socket.io==4.7.5
+nodemon==3.1.3
