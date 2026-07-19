@@ -50,7 +50,7 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = '/api/auth/google';
+    window.location.href = "https://ecochat-rec4.onrender.com/api/auth/google";
   };
 
   return (
