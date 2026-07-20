@@ -12,6 +12,7 @@ const { protect } = require('../middleware/auth');
 const { authLimiter } = require('../middleware/rateLimiter');
 
 const router = express.Router();
+const frontendUrl = process.env.CLIENT_URL || 'https://eco-chat-eight.vercel.app';
 
 // @desc    Register user (Email/Password)
 // @route   POST /api/auth/register
@@ -29,7 +30,7 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 // @route   GET /api/auth/google/callback
 router.get(
   '/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login?error=oauth_failed', session: false }),
+  passport.authenticate('google', { failureRedirect: `${frontendUrl}/login?error=oauth_failed`, session: false }),
   googleCallback
 );
 

@@ -37,20 +37,27 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     const loadingToast = toast.loading('Signing in...');
-    const res = await login(data.emailOrUsername, data.password);
-    toast.dismiss(loadingToast);
 
-    if (res?.success) {
-      toast.success('Welcome back!');
-      await checkAuth(); // Sync state
-      navigate('/dashboard');
-    } else {
-      toast.error(res?.message || 'Invalid credentials');
+    try {
+      const res = await login(data.emailOrUsername, data.password);
+      toast.dismiss(loadingToast);
+
+      if (res?.success) {
+        toast.success('Welcome back!');
+        await checkAuth();
+        navigate('/dashboard');
+      } else {
+        toast.error(res?.message || 'Invalid credentials');
+      }
+    } catch (error) {
+      toast.dismiss(loadingToast);
+      toast.error('An unexpected error occurred. Please try again.');
     }
   };
 
-  const handleGoogleLogin = () => {
-    window.location.href = "https://ecochat-rec4.onrender.com/api/auth/google";
+  const handleGoogleLogin = (e) => {
+    if (e) e.preventDefault();
+    window.location.assign('https://ecochat-rec4.onrender.com/api/auth/google');
   };
 
   return (
@@ -130,6 +137,7 @@ const Login = () => {
         </div>
 
         <button
+          type="button"
           onClick={handleGoogleLogin}
           className="w-full flex items-center justify-center px-6 py-3 border border-slate-200 dark:border-slate-800 rounded-2xl text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-950 hover:bg-slate-50 dark:hover:bg-slate-900 transition font-semibold text-xs shadow-soft"
         >

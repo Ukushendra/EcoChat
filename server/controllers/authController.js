@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
+const frontendUrl = process.env.CLIENT_URL || 'https://eco-chat-eight.vercel.app';
+
 const generateAccessToken = (user) => {
   return jwt.sign(
     { id: user._id, email: user.email },
@@ -166,7 +168,7 @@ const googleCallback = async (req, res) => {
   try {
     const user = req.user;
     if (!user) {
-      return res.redirect(`${process.env.CLIENT_URL || 'http://localhost:5173'}/login?error=auth_failed`);
+      return res.redirect(`${frontendUrl}/login?error=auth_failed`);
     }
 
     const accessToken = generateAccessToken(user);
@@ -179,12 +181,12 @@ const googleCallback = async (req, res) => {
     res.cookie('refreshToken', refreshToken, getCookieOptions(7 * 24 * 60 * 60 * 1000));
 
     if (!user.username) {
-      return res.redirect(`${process.env.CLIENT_URL || 'http://localhost:5173'}/onboarding`);
+      return res.redirect(`${frontendUrl}/onboarding`);
     }
-    return res.redirect(`${process.env.CLIENT_URL || 'http://localhost:5173'}/dashboard`);
+    return res.redirect(`${frontendUrl}/dashboard`);
   } catch (error) {
     console.error('Google callback controller error:', error);
-    return res.redirect(`${process.env.CLIENT_URL || 'http://localhost:5173'}/login?error=server_error`);
+    return res.redirect(`${frontendUrl}/login?error=server_error`);
   }
 };
 
