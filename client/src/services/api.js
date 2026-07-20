@@ -1,8 +1,20 @@
 import axios from 'axios';
 
+const getApiBaseUrl = () => {
+  if (import.meta.env.VITE_API_BASE_URL && import.meta.env.VITE_API_BASE_URL.trim()) {
+    return import.meta.env.VITE_API_BASE_URL.trim();
+  }
+
+  if (import.meta.env.PROD) {
+    return 'https://ecochat-rec4.onrender.com';
+  }
+
+  return '';
+};
+
 const api = axios.create({
-  baseURL: '', // Handled by Vite development proxy
-  withCredentials: true, // Send cookies with requests
+  baseURL: getApiBaseUrl(),
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },

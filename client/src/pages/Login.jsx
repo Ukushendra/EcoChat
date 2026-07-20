@@ -57,7 +57,7 @@ const Login = () => {
 
   const handleGoogleLogin = (e) => {
     if (e) e.preventDefault();
-    window.location.assign('https://ecochat-rec4.onrender.com/api/auth/google');
+    window.location.assign(`${import.meta.env.PROD ? 'https://ecochat-rec4.onrender.com' : ''}/api/auth/google`);
   };
 
   return (

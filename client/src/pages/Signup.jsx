@@ -98,7 +98,7 @@ const Signup = () => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = '/api/auth/google';
+    window.location.assign(`${import.meta.env.PROD ? 'https://ecochat-rec4.onrender.com' : ''}/api/auth/google`);
   };
 
   return (
