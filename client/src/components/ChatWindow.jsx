@@ -425,8 +425,10 @@ const ChatWindow = () => {
                       )}
 
                       {/* Message Content */}
-                      {msg.content && (
-                        <p className="text-sm font-medium leading-relaxed">{msg.content}</p>
+                      {(msg.content || msg.message) && (
+                        <p className="text-sm font-medium leading-relaxed">
+                          {msg.content || msg.message}
+                        </p>
                       )}
 
                       {/* Metadata row */}

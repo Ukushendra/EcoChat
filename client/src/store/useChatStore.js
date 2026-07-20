@@ -36,24 +36,21 @@ export const useChatStore = create((set, get) => ({
       if (res.data.success) {
         const chat = res.data.chat;
         
-        // Find other participant from chat object
+        const selfId = useAuthStore.getState().user?._id;
         const otherParticipant = chat.participants.find(
-          (p) => p._id.toString() !== participantId.toString() // wait, compared to self
-        ); // Let's make it simpler, we will format it like other chats in the list
-        
-        // We will fetch chats again to ensure UI consistency
+          (p) => p._id.toString() !== selfId?.toString()
+        );
+
         await get().fetchChats();
         
-        // Find and set active chat from the updated chats list
         const updatedChat = get().chats.find((c) => c._id === chat._id);
         if (updatedChat) {
           set({ activeChat: updatedChat });
         } else {
-          // Fallback if not populated yet
           set({
             activeChat: {
               _id: chat._id,
-              otherParticipant: chat.participants.find(p => p._id !== participantId), // wait, client side self check needed
+              otherParticipant,
               unreadCount: 0,
             }
           });
