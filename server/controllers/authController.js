@@ -2,7 +2,18 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
-const frontendUrl = process.env.CLIENT_URL || 'https://eco-chat-eight.vercel.app';
+const getFrontendUrl = () => {
+  if (process.env.CLIENT_URL && process.env.CLIENT_URL.trim()) {
+    const configuredUrl = process.env.CLIENT_URL.trim();
+    if (configuredUrl !== 'http://localhost:5173' || process.env.NODE_ENV !== 'production') {
+      return configuredUrl;
+    }
+  }
+
+  return process.env.NODE_ENV === 'production' ? 'https://eco-chat-eight.vercel.app' : 'http://localhost:5173';
+};
+
+const frontendUrl = getFrontendUrl();
 
 const generateAccessToken = (user) => {
   return jwt.sign(

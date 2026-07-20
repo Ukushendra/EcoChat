@@ -2,12 +2,24 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require('../models/User');
 
+const getGoogleCallbackUrl = () => {
+  if (process.env.GOOGLE_CALLBACK_URL && process.env.GOOGLE_CALLBACK_URL.trim()) {
+    return process.env.GOOGLE_CALLBACK_URL.trim();
+  }
+
+  if (process.env.NODE_ENV === 'production') {
+    return 'https://ecochat-rec4.onrender.com/api/auth/google/callback';
+  }
+
+  return 'http://localhost:5000/api/auth/google/callback';
+};
+
 passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID || 'dummy_client_id',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'dummy_client_secret',
-      callbackURL: process.env.GOOGLE_CALLBACK_URL || 'http://localhost:5000/api/auth/google/callback',
+      callbackURL: getGoogleCallbackUrl(),
       proxy: true,
     },
     async (accessToken, refreshToken, profile, done) => {
